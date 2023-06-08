@@ -156,6 +156,17 @@ class ClickHouseEngineSpec(ClickHouseBaseEngineSpec):
         if not new_exception:
             return exception
         return new_exception(str(exception))
+    
+    @classmethod
+    def modify_url_for_impersonation(cls, url, impersonate_user: bool, username: str):
+        """
+        Modify the SQL Alchemy URL object with the user to impersonate if applicable.
+        :param url: SQLAlchemy URL object
+        :param impersonate_user: Flag indicating if impersonation is enabled
+        :param username: Effective username
+        """
+        if impersonate_user is not None and username is not None:
+            url.query['username'] = username
 
     @classmethod
     @cache_manager.cache.memoize()
