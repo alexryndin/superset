@@ -142,7 +142,7 @@ class ClickHouseEngineSpec(ClickHouseBaseEngineSpec):
     engine_name = "ClickHouse"
 
     _show_functions_column = "name"
-    supports_file_upload = False
+    supports_file_upload = True
 
     @classmethod
     def get_dbapi_exception_mapping(cls) -> dict[type[Exception], type[Exception]]:
