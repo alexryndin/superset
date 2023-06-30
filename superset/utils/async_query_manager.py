@@ -22,6 +22,7 @@ from typing import Any, Dict, List, Literal, Optional, Tuple
 import jwt
 import redis
 from flask import Flask, request, Request, Response, session
+from superset.utils.core import base_json_conv
 
 from superset.utils.core import get_user_id
 
@@ -184,7 +185,7 @@ class AsyncQueryManager:
             raise AsyncQueryJobException("No job ID specified")
 
         updates = {"status": status, **kwargs}
-        event_data = {"data": json.dumps({**job_metadata, **updates})}
+        event_data = {"data": json.dumps({**job_metadata, **updates}, default=base_json_conv)}
 
         full_stream_name = f"{self._stream_prefix}full"
         scoped_stream_name = f"{self._stream_prefix}{job_metadata['channel_id']}"
